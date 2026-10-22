@@ -1,56 +1,36 @@
-
 #include <iostream>
 using namespace std;
 
-int bubbleSort(int arr[], int size)
+bool exists(int arr[], int low, int high, int key)
 {
-    int passes = 0;
+    if (low > high)
+        return false;
 
-    for (int i = 0; i < size - 1; i++)
-    {
-        bool swapped = false;
-        passes++;
+    int mid = (low + high) / 2;
 
-        for (int j = 0; j < size - 1 - i; j++)
-        {
-            if (arr[j] > arr[j + 1])
-            {
-                int temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
+    if (arr[mid] == key)
+        return true;
 
-                swapped = true;
-            }
-        }
+    else if (key < arr[mid])
+        return exists(arr, low, mid - 1, key);
 
-        if (swapped == false)
-            break;
-    }
-
-    return passes;
+    else
+        return exists(arr, mid + 1, high, key);
 }
 
 int main()
 {
-    int arr1[5] = {9, 7, 5, 3, 1};
-    int arr2[5] = {1, 2, 3, 4, 5};
+    int marks[7] = {35, 48, 56, 67, 72, 85, 91};
 
-    int passes1 = bubbleSort(arr1, 5);
-    int passes2 = bubbleSort(arr2, 5);
+    if (exists(marks, 0, 6, 72))
+        cout << "72 is present" << endl;
+    else
+        cout << "72 is not present" << endl;
 
-    cout << "Array 1 sorted: ";
-
-    for (int i = 0; i < 5; i++)
-        cout << arr1[i] << " ";
-
-    cout << " Passes: " << passes1 << endl;
-
-    cout << "Array 2 sorted: ";
-
-    for (int i = 0; i < 5; i++)
-        cout << arr2[i] << " ";
-
-    cout << " Passes: " << passes2 << endl;
+    if (exists(marks, 0, 6, 60))
+        cout << "60 is present" << endl;
+    else
+        cout << "60 is not present" << endl;
 
     return 0;
 }
